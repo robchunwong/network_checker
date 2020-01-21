@@ -11,7 +11,7 @@ def get_ip():
 
 def get_telnet():
 	ports = [80, 443]
-	x = os.system("telnet " + str("www.icbc.com.cn") + " " + str(ports[0]))
+	x = os.system("telnet " + str("www.testrbc.com") + " " + str(ports[0]))
 	e.insert(0, str(x))
 
 
@@ -21,12 +21,12 @@ def get_hostname():
 	e.insert(0, str(x))
 
 def get_ping():
-	url = "www.icbc.com.cn"
+	url = "www.testrbc.com"
 	x = os.system("ping " + url )
 
 
 def get_trace():
-	url = "www.icbc.com.cn"
+	url = "www.testrbc.com"
 	x = os.system("tracert " + url)
 
 
