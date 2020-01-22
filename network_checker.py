@@ -11,7 +11,7 @@ def get_ip():
 
 def get_telnet():
 	ports = [80, 443]
-	x = os.system("telnet " + str("www.testrbc.com") + " " + str(ports[0]))
+	x = os.system("telnet " + str("www.icbc.com.cn") + " " + str(ports[0]))
 	e.insert(0, str(x))
 
 
@@ -21,31 +21,43 @@ def get_hostname():
 	e.insert(0, str(x))
 
 def get_ping():
-	url = "www.testrbc.com"
+	url = "www.icbc.com.cn"
 	x = os.system("ping " + url )
 
 
 def get_trace():
-	url = "www.testrbc.com"
+	url = "www.icbc.com.cn"
 	x = os.system("tracert " + url)
 
 
 def webscrape():
-	res = requests.get('http://www.testrbc.com')
+	res = requests.get('http://www.icbc.com.cn')
 	soup = bs4.BeautifulSoup(res.content, 'html.parser')
-	x = soup.find(class_="main")
-	text = x.get_text()
 
-	if len(text) == 247:
-		print("vpn = down")
-	else: 
-		print("vpn = up")
+	headers = res.headers
+	status = res.status_code
+	x = soup.find(class_="main")
+
+	if len(headers) == 3 and status == 200:
+		text = x.get_text()
+		print("VPN = down, Bank = Up")
+		print(text)
+	elif len(headers) == 3 and status != 200:
+		text = x.get_text()
+		print("VPN = down, Bank = Down")
+		print(text)
+	elif len(headers) > 3 and status != 200:
+		print("VPN = Up, Bank = Down")
+	else:
+		print("VPN = Up, Bank = Up")
+
 
 		
 #create a root terminal
 root = Tk()
 root.title("network checker")
-
+root.geometry("500x500") #You want the size of the app to be 500x500
+root.resizable(0, 0) #Don't allow resizing in the x or y direction
 
 #create and use input
 e = Entry(root, width=100, borderwidth=5)
